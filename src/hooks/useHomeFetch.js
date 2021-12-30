@@ -27,6 +27,11 @@ export const useHomeFetch = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    /* Create a new state to use for search */
+    const [searchTerm, setSearchTerm] = useState(''); //so the initial state of this is empty string
+
+    console.log(searchTerm); //you can see after a slight delay the trigger here
+
     //in the API code it uses await so we must mark this async
     const fetchMovies = async(page, seaerchTerm = "") => {
         try {
@@ -57,5 +62,6 @@ export const useHomeFetch = () => {
         state: state,
         loading: loading,
         error: error,
+        setSearchTerm,
     }
 }

@@ -11,6 +11,7 @@ import HeroImage from './HeroImage';
 import Grid from './Grid';
 import Thumb from './Thumb';
 import Spinner from './Spinner';
+import SearchBar from './SearchBar';
 
 //Hooks
 import { useHomeFetch } from '../hooks/useHomeFetch';
@@ -19,7 +20,7 @@ import { useHomeFetch } from '../hooks/useHomeFetch';
 import NoImage from '../images/no_image.jpg';
 
 const Home = () => {
-    const { state, loading, error } = useHomeFetch()
+    const { state, loading, error, setSearchTerm } = useHomeFetch()
     console.log(state); //you will see several renders in console. one with page == 0 (the initial state) then one for each state once data is returned
     
     //the weird "Tags" are becuase you can only return one JSX level element
@@ -33,6 +34,7 @@ const Home = () => {
                 text={state.results[0].overview}
             />
         ) : null}
+        <SearchBar setSearchTerm={setSearchTerm} />
         <Grid header='Popular Movies'>
             {state.results.map(movie => (
                 <Thumb
