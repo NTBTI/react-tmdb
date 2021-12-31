@@ -54,14 +54,18 @@ export const useHomeFetch = () => {
         setLoading(false);
     }
 
+    //Inital render and search
     useEffect(() => {
-        fetchMovies(1);
-    }, []); //this is a dependency array. empty means this will only fire once (when the page renders)
+        setState(initialState); //this wipes out the current state so this will make the search return the new values
+        fetchMovies(1, searchTerm);
+    }, [searchTerm]); //this is a dependency array. empty means this will only fire once (when the page renders).
+    //having something in here means it will fire on every change of that dependencey
 
     return {
         state: state,
         loading: loading,
         error: error,
         setSearchTerm,
+        searchTerm,
     }
 }

@@ -20,14 +20,15 @@ import { useHomeFetch } from '../hooks/useHomeFetch';
 import NoImage from '../images/no_image.jpg';
 
 const Home = () => {
-    const { state, loading, error, setSearchTerm } = useHomeFetch()
+    const { state, loading, error, setSearchTerm, searchTerm } = useHomeFetch()
     console.log(state); //you will see several renders in console. one with page == 0 (the initial state) then one for each state once data is returned
     
     //the weird "Tags" are becuase you can only return one JSX level element
     //so we need to wrap it. It could be in <div> or <p> or whatever, but this makes a null element wrapper
     return (
         <>
-        {state.results[0] ? (
+        {/*this removes the hero image if there is a search happening OR there is no results*/}
+        {!searchTerm && state.results[0] ? (
             <HeroImage
                 image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${state.results[0].backdrop_path}`}
                 title={state.results[0].original_title}
@@ -35,7 +36,7 @@ const Home = () => {
             />
         ) : null}
         <SearchBar setSearchTerm={setSearchTerm} />
-        <Grid header='Popular Movies'>
+        <Grid header={searchTerm ? 'Search Results' : 'Popular Movies'}>
             {state.results.map(movie => (
                 <Thumb
                     key={movie.id}
