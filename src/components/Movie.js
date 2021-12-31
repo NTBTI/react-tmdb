@@ -9,6 +9,9 @@ import Grid from './Grid';
 import Spinner from './Spinner';
 import Breadcrumb from './Breadcrumb';
 import MovieInfo from './MovieInfo';
+import MovieInfoBar from './MovieInfoBar';
+import Actor from './Actor';
+import NoImage from '../images/no_image.jpg';
 
 //Hooks
 import { useMovieFetch } from '../hooks/useMovieFetch';
@@ -30,6 +33,23 @@ const Movie = () => {
         <>
             <Breadcrumb movieTitle={movie.original_title}/>
             <MovieInfo movie={movie}/>
+            <MovieInfoBar
+                 budget={movie.budget}
+                 time={movie.runtime}
+                 revenue={movie.revenue}
+            />
+            <Grid header="Actors">
+                {movie.actors.map(actor => (
+                    <Actor
+                        key={actor.credit_id}
+                        name={actor.name}
+                        character={actor.character}
+                        imageUrl={
+                            actor.profile_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${actor.profile_path}` : NoImage
+                        }
+                    />
+                ))}
+            </Grid>
         </>
     )
 };
