@@ -27,7 +27,7 @@ const MovieInfo = ({ movie }) =>  (
                 <div className="rating-directors">
                     <div>
                         <h3>RATING</h3>
-                        <div className="scorre">{movie.vote_average}</div>
+                        <div className="score">{movie.vote_average}</div>
                     </div>
                     <div className="director">
                         <h3>DIRECTOR{movie.directors.length > 1 ? 'S' : ''}</h3>

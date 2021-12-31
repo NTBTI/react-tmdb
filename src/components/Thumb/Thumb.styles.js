@@ -7,6 +7,7 @@ export const Image = styled.img`
     object-fit: cover;
     border-radius: 20px;
     animation: animateThumb 0.5s;
+    filter: drop-shadow(0.4rem 0.4rem 0.2rem rgba(0, 0, 0, 0.8));
 
     :hover {
         opacity: 0.8;
