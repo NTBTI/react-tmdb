@@ -30,6 +30,9 @@ export const useHomeFetch = () => {
     /* Create a new state to use for search */
     const [searchTerm, setSearchTerm] = useState(''); //so the initial state of this is empty string
 
+    /* New state for button to load more movies */
+    const [isLoadingMore, setIsLoadingMore] = useState(false);
+
     console.log(searchTerm); //you can see after a slight delay the trigger here
 
     //in the API code it uses await so we must mark this async
@@ -61,11 +64,22 @@ export const useHomeFetch = () => {
     }, [searchTerm]); //this is a dependency array. empty means this will only fire once (when the page renders).
     //having something in here means it will fire on every change of that dependencey
 
+    //load more
+    useEffect(() => {
+        if (!isLoadingMore) {
+            return;
+        }
+
+        fetchMovies(state.page+1, searchTerm);
+        setIsLoadingMore(false);
+    },[isLoadingMore, searchTerm, state.page]); //make sure to put in the proper dependencies
+
     return {
         state: state,
         loading: loading,
         error: error,
         setSearchTerm,
         searchTerm,
+        setIsLoadingMore
     }
 }

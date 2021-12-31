@@ -12,6 +12,7 @@ import Grid from './Grid';
 import Thumb from './Thumb';
 import Spinner from './Spinner';
 import SearchBar from './SearchBar';
+import Button from './Button';
 
 //Hooks
 import { useHomeFetch } from '../hooks/useHomeFetch';
@@ -20,9 +21,12 @@ import { useHomeFetch } from '../hooks/useHomeFetch';
 import NoImage from '../images/no_image.jpg';
 
 const Home = () => {
-    const { state, loading, error, setSearchTerm, searchTerm } = useHomeFetch()
+    const { state, loading, error, setSearchTerm, searchTerm, setIsLoadingMore } = useHomeFetch()
     console.log(state); //you will see several renders in console. one with page == 0 (the initial state) then one for each state once data is returned
     
+    if (error) {
+        return <div>something went wrong...</div>
+    }
     //the weird "Tags" are becuase you can only return one JSX level element
     //so we need to wrap it. It could be in <div> or <p> or whatever, but this makes a null element wrapper
     return (
@@ -48,7 +52,10 @@ const Home = () => {
                 />
             ))}
         </Grid>
-        <Spinner />
+        {loading && <Spinner />}
+        {state.page < state.total_pages && !loading && (
+            <Button text="Load More" callback={() => setIsLoadingMore(true)}/>
+        )}
         </>
     );
 }
