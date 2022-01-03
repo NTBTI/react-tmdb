@@ -2,6 +2,7 @@ import React from 'react';
 
 //Components
 import Thumb from '../Thumb';
+import VideoPlayer from '../VideoPlayer';
 
 //Config
 import { IMAGE_BASE_URL, POSTER_SIZE } from '../../config';
@@ -12,7 +13,62 @@ import NoImage from '../../images/no_image.jpg';
 //Styles
 import { Wrapper, Content, Text} from './MovieInfo.styles';
 
-const MovieInfo = ({ movie }) =>  (
+const MovieInfo = ({ movie }) =>  {
+    const playerRef = React.useRef(null);
+    const startTest = 3;
+    const endTest = 6;
+    const videoJsOptions = {
+        autoplay: false,
+        controls: true,
+        responsive: true,
+        fluid: true,
+        sources: [{
+            src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+            type: 'video/mp4'
+        }]
+    };
+
+    const handlePlayerReady = (player) => {
+        playerRef.current = player;
+
+        //events handled here
+        player.on('waiting', () => {
+            console.log('player waiting');
+        });
+
+        player.on('dispose',() => {
+            console.log('player being disposed');
+        });
+
+        player.overlay({
+            content: 'Default overlay content',
+            debug: false,
+            class: 'recipeoverlay',
+            overlays: [{
+              content: 'The video is playing!',
+              start: 'play',
+              end: 'pause',
+              something: 'woot'
+            }, {
+              start: 0,
+              end: 15,
+              align: 'bottom-left'
+            }, {
+              start: 15,
+              end: 30,
+              align: 'bottom'
+            }, {
+              start: 30,
+              end: 45,
+              align: 'bottom-right'
+            }, {
+              start: 20,
+              end: 'pause'
+            }]
+        });
+    }
+
+    return (
     <Wrapper backdrop={movie.backdrop_path}>
         <Content>
             <Thumb 
@@ -36,9 +92,11 @@ const MovieInfo = ({ movie }) =>  (
                             ))}
                     </div>
                 </div>
+                <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
             </Text>
         </Content>
     </Wrapper>
-);
+    );
+};
 
 export default MovieInfo;

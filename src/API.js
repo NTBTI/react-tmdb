@@ -23,12 +23,16 @@ const apiSettings = {
     return await (await fetch(endpoint)).json();
   },
   fetchMovie: async movieId => {
-    const endpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}`;
+    const endpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}&append_to_response=videos`;
     return await (await fetch(endpoint)).json();
   },
   fetchCredits: async movieId => {
     const creditsEndpoint = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
     return await (await fetch(creditsEndpoint)).json();
+  },
+  fetchTrailers: async movieId => {
+    const trailersEndpoint = `${API_URL}/movie/${movieId}/videos?api_key=${API_KEY}`;
+    return await (await fetch(trailersEndpoint)).json();
   },
   // Bonus material below for login
   getRequestToken: async () => {

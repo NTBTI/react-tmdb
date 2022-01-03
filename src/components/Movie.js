@@ -11,11 +11,11 @@ import Breadcrumb from './Breadcrumb';
 import MovieInfo from './MovieInfo';
 import MovieInfoBar from './MovieInfoBar';
 import Actor from './Actor';
+import VideoPlayer from './VideoPlayer';
 import NoImage from '../images/no_image.jpg';
 
 //Hooks
 import { useMovieFetch } from '../hooks/useMovieFetch';
-
 
 const Movie = () => {
     const { movieId } = useParams();
